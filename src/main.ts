@@ -11,10 +11,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const port = Number(process.env.APP_PORT);
-  const host = process.env.APP_CLIENT;
+  const hostname = String(process.env.APP_CLIENT);
   const appName = process.env.APP_NAME;
   const cors = {
-    origin: `${host}:${port}`,
+    url: `${hostname}/`,
     methods: `GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS`,
   };
 
@@ -34,8 +34,8 @@ async function bootstrap() {
 
   app.enableCors(cors);
 
-  await app.listen(port, () =>
-    console.log(`${appName} running on port: ${port}`)
+  await app.listen(port, hostname, () =>
+    console.log(`${appName} running on: ${hostname}`)
   );
 }
 
